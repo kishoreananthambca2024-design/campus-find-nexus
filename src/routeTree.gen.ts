@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BrowseRouteImport } from './routes/browse'
+import { Route as ReportFoundRouteImport } from './routes/report-found'
 import { Route as ReportLostRouteImport } from './routes/report-lost'
 
 const IndexRoute = IndexRouteImport.update({
@@ -23,6 +24,11 @@ const BrowseRoute = BrowseRouteImport.update({
   path: '/browse',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReportFoundRoute = ReportFoundRouteImport.update({
+  id: '/report-found',
+  path: '/report-found',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReportLostRoute = ReportLostRouteImport.update({
   id: '/report-lost',
   path: '/report-lost',
@@ -32,30 +38,34 @@ const ReportLostRoute = ReportLostRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/browse': typeof BrowseRoute
+  '/report-found': typeof ReportFoundRoute
   '/report-lost': typeof ReportLostRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/browse': typeof BrowseRoute
+  '/report-found': typeof ReportFoundRoute
   '/report-lost': typeof ReportLostRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/browse': typeof BrowseRoute
+  '/report-found': typeof ReportFoundRoute
   '/report-lost': typeof ReportLostRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/browse' | '/report-lost'
+  fullPaths: '/' | '/browse' | '/report-found' | '/report-lost'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/browse' | '/report-lost'
-  id: '__root__' | '/' | '/browse' | '/report-lost'
+  to: '/' | '/browse' | '/report-found' | '/report-lost'
+  id: '__root__' | '/' | '/browse' | '/report-found' | '/report-lost'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BrowseRoute: typeof BrowseRoute
+  ReportFoundRoute: typeof ReportFoundRoute
   ReportLostRoute: typeof ReportLostRoute
 }
 
@@ -75,6 +85,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BrowseRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/report-found': {
+      id: '/report-found'
+      path: '/report-found'
+      fullPath: '/report-found'
+      preLoaderRoute: typeof ReportFoundRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/report-lost': {
       id: '/report-lost'
       path: '/report-lost'
@@ -88,6 +105,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BrowseRoute: BrowseRoute,
+  ReportFoundRoute: ReportFoundRoute,
   ReportLostRoute: ReportLostRoute,
 }
 export const routeTree = rootRouteImport
